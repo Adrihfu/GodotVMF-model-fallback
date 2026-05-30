@@ -353,7 +353,7 @@ static func define_project_settings():
 		"name": "godot_vmf/models/fallback_model",
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_FILE_PATH,
-		"hint_string": "*.mdl,*.tscn,*.scn,*.tres,*.res,.*.mesh",
+		"hint_string": "*.mdl,*.tscn,*.scn,*.tres,*.res,.*.mesh,*.obj,*.fbx,*.gltf,*.glb",
 		"default_value": "",
 	})
 
