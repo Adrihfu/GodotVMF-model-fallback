@@ -7,6 +7,7 @@ const SETTINGS_TO_LOAD = [
 	"godot_vmf/models/import",
 	"godot_vmf/models/target_folder",
 	"godot_vmf/models/lightmap_texel_size",
+	"godot_vmf/models/fallback_model",
 	"godot_vmf/materials/import_mode",
 	"godot_vmf/materials/target_folder",
 	"godot_vmf/materials/ignore",
@@ -40,6 +41,12 @@ class ModelsConfig:
 	var target_folder: String = ProjectSettings.get_setting("godot_vmf/models/target_folder", "res://"):
 		set(value):
 			ProjectSettings.set_setting("godot_vmf/models/target_folder", value);
+
+	## A model mesh that will be used as a fallback for missing models
+	var fallback_model: String = ProjectSettings.get_setting("godot_vmf/models/fallback_model", ""):
+		set(value):
+			ProjectSettings.set_setting("godot_vmf/models/fallback_model", value);
+
 
 class MaterialsConfig:
 	enum ImportMode {
@@ -214,6 +221,9 @@ static func define_project_settings():
 		ProjectSettings.set_setting("godot_vmf/models/lightmap_texel_size", 0.4);
 	ProjectSettings.set_initial_value("godot_vmf/models/lightmap_texel_size", 0.4);
 
+	if not ProjectSettings.has_setting("godot_vmf/models/fallback_model"):
+		ProjectSettings.set_setting("godot_vmf/models/fallback_model", "");
+	ProjectSettings.set_initial_value("godot_vmf/models/fallback_model", "");
 
 	## Materials
 	if not ProjectSettings.has_setting("godot_vmf/materials/import_mode"):
@@ -331,12 +341,20 @@ static func define_project_settings():
 		"hint": PROPERTY_HINT_NONE,
 		"default_value": "res://"
 	})
-
+	
 	ProjectSettings.add_property_info({
 		"name": "godot_vmf/models/lightmap_texel_size",
 		"type": TYPE_FLOAT,
 		"hint": PROPERTY_HINT_NONE,
 		"default_value": 0.4,
+	})
+
+	ProjectSettings.add_property_info({
+		"name": "godot_vmf/models/fallback_model",
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_FILE_PATH,
+		"hint_string": "*.mdl,*.tscn,*.scn,*.tres,*.res,.*.mesh",
+		"default_value": "",
 	})
 
 	## Materials
